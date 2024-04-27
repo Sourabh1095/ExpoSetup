@@ -1,60 +1,6 @@
-// import {
-//   StyleSheet,
-//   Text,
-//   View,
-//   ScrollView,
-//   TouchableOpacity,
-//   Image,
-// } from "react-native";
-// import React from "react";
-// import { useTheme } from "@react-navigation/native";
-// import { Calendar } from "react-native-calendars";
-
-// import RootView from "../../../components/util/RootView";
-// import HeaderComp from "../../../components/util/HeaderComp";
-// import { GlobalStyles } from "../../../components/styles/globalStyles";
-
-// export default function Filters({ navigation }) {
-//   const gStyle = GlobalStyles();
-//   const theme = useTheme();
-
-//   return (
-//     <RootView>
-//       <ScrollView style={{ flex: 1 }}>
-
-//         {/* header starts */}
-//         <View style={gStyle.flexBetween}>
-//           <HeaderComp title={"Filter"} style={gStyle.flexStyle}>
-//             <TouchableOpacity onPress={() => navigation.goBack()}>
-//               <Image
-//                 source={require("../../../assets/back.png")}
-//                 resizeMode="contain"
-//                 style={gStyle.back}
-//               />
-//             </TouchableOpacity>
-//           </HeaderComp>
-//           <TouchableOpacity>
-//             <Text style={[gStyle.property, { color: theme.colors.primary, textDecorationLine:'underline', marginTop:5 }]}>Reset</Text>
-//           </TouchableOpacity>
-//         </View>
-//         {/* header and reset ends */}
-
-//         {/* Calendar view starts */}
-//         <Calendar
-
-//         />
-//         {/* Calendar view ends */}
-//       </ScrollView>
-//     </RootView>
-//   );
-// }
-
-// const styles = StyleSheet.create({});
-
 import React, {useState, Fragment, useCallback, useMemo, useRef} from 'react';
 import {StyleSheet, View, ScrollView, Text, TouchableOpacity} from 'react-native';
 import {Calendar, CalendarUtils} from 'react-native-calendars';
-// import testIDs from '../testIDs';
 
 const INITIAL_DATE = '2022-07-06';
 
