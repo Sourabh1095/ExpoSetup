@@ -3,12 +3,13 @@ import React from "react";
 
 import { GlobalStyles } from "../styles/globalStyles";
 
-export default function HeaderSub({ children, subTitle }) {
+export default function HeaderSub({ children, subTitle, style, childrens }) {
   const gStyle = GlobalStyles();
   return (
-    <View>
+    <View style={style}>
       {children}
       <Text style={gStyle.headerSubText}>{subTitle}</Text>
+      {childrens}
     </View>
   );
 }

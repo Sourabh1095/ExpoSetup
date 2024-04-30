@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import { useTheme } from "@react-navigation/native";
 import { TextInput } from "react-native-paper";
+import { useDispatch } from "react-redux";
 
 import { GlobalStyles } from "../../components/styles/globalStyles";
 import RootView from "../../components/util/RootView";
@@ -20,12 +21,22 @@ import TextInputComp from "../../components/util/TextInputComp";
 import Button from "../../components/util/Button";
 import OrStrike from "../../components/util/OrStrike";
 import Footer from "../../components/util/Footer";
+import { loggedState } from "../../redux/slices/isLogged";
+import { useTextInput } from "../../components/hooks/useTextInput";
 
-export default function Login() {
+export default function Login({ navigation }) {
   const gStyle = GlobalStyles();
   const theme = useTheme();
   const styles = generateStyles(theme);
+  const dispatch = useDispatch();
+
+  //state
   const [showPassword, setShowPassword] = useState(false);
+
+  //text inputs
+  const [email, setEmail, emailError] = useTextInput("", "email");
+  const [password, setPassword, passwordError] = useTextInput("", "password");
+
   return (
     <RootView>
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
@@ -35,12 +46,17 @@ export default function Login() {
         />
 
         {/* Onboarding textinputs starts */}
-        <View style={{ marginTop: height * 0.03 }}>
-          <Label label={"Your Phone Number/Email ID"} />
-          <TextInputComp placeholder={"+91 99999 99999/abc@gmail.com"} />
+        <View style={gStyle.marginTop}>
+          <Label label={"Your Email ID"} />
+          <TextInputComp
+            placeholder={"abc@gmail.com"}
+            value={email}
+            onChangeText={setEmail}
+            errorMessage={emailError}
+          />
         </View>
 
-        <View style={{ marginTop: height * 0.03 }}>
+        <View style={gStyle.marginTop}>
           <Label label={"Enter Password"} />
           <TextInputComp
             right={
@@ -49,13 +65,19 @@ export default function Login() {
                 onPress={() => setShowPassword(!showPassword)}
               />
             }
+            value={password}
+            onChangeText={setPassword}
             secureTextEntry={!showPassword}
             placeholder={"min. 8 characters"}
+            errorMessage={passwordError}
           />
         </View>
         {/* Onboarding textinputs ends */}
 
-        <TouchableOpacity style={styles.forgotView}>
+        <TouchableOpacity
+          style={styles.forgotView}
+          onPress={() => navigation.navigate("ForgotPassword")}
+        >
           <Text
             style={[styles.forgotPassText, { color: theme.colors.primary }]}
           >
@@ -63,9 +85,14 @@ export default function Login() {
           </Text>
         </TouchableOpacity>
 
-        <Button text={"Continue"} style={{ marginTop: height * 0.03 }} />
+        <Button
+          text={"Continue"}
+          style={{ marginTop: height * 0.03 }}
+          disabled={!!emailError || !!passwordError || !email || !password}
+          onPress={() => dispatch(loggedState(true))}
+        />
 
-        <OrStrike style={{ marginVertical: height * 0.03 }} />
+        <OrStrike style={{ marginVertical: height * 0.05 }} />
 
         {/* Socials starts */}
         <Button
@@ -99,7 +126,11 @@ export default function Login() {
       </ScrollView>
 
       {/* footer starts */}
-      <Footer />
+      <Footer
+        text={"Don't have an account? "}
+        pressableText={"Sign Up"}
+        onPress={() => navigation.navigate("SignUpAs")}
+      />
       {/* footer ends */}
     </RootView>
   );

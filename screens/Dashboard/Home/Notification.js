@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-export default function Filters() {
+export default function Notification() {
   return (
     <View>
-      <Text>Filters</Text>
+      <Text>Notification</Text>
     </View>
   )
 }

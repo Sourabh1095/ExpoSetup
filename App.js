@@ -1,14 +1,19 @@
-import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useColorScheme } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
-import { PaperProvider, configureFonts } from "react-native-paper";
+import { PaperProvider } from "react-native-paper";
+import { Provider } from "react-redux";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
 
 import MainNavigator from "./navigation/Navigator";
 import { LightTheme, DarkTheme } from "./constants/Theme";
+import { store } from "./redux/reducer/store";
+
+let persistor = persistStore(store);
 
 SplashScreen.preventAutoHideAsync();
 
@@ -31,14 +36,19 @@ export default function App() {
     return null;
   }
 
-
   return (
     <SafeAreaProvider onLayout={onLayoutRootView}>
-      <PaperProvider>
-        <NavigationContainer theme={scheme == "light" ? LightTheme : DarkTheme}>
-          <MainNavigator />
-        </NavigationContainer>
-      </PaperProvider>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <PaperProvider>
+            <NavigationContainer
+              theme={scheme == "light" ? LightTheme : DarkTheme}
+            >
+              <MainNavigator />
+            </NavigationContainer>
+          </PaperProvider>
+        </PersistGate>
+      </Provider>
     </SafeAreaProvider>
   );
 }

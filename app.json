@@ -34,7 +34,13 @@
             "./assets/fonts/Poppins-SemiBold.ttf"
           ]
         }
-      ] 
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to set your display picture."
+        }
+      ]
     ]
   }
 }
